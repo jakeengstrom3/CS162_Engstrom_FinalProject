@@ -7,6 +7,9 @@ public class OutBreakHandler {
 
     public OutBreakHandler(int numZombies, int numHumans, PApplet p){
         sprites = new ArrayList<Sprite>();
+        for(int i = 0; i < numHumans; i++){
+            sprites.add(new Human(p));
+        }
         for(int i = 0; i < numZombies; i++){
             sprites.add(new Zombie(p));
         }
@@ -23,5 +26,9 @@ public class OutBreakHandler {
         for(Sprite s : sprites){
             s.draw();
         }
+    }
+
+    public Sprite getSprite(int index){
+        return sprites.get(index);
     }
 }
