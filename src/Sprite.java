@@ -4,29 +4,32 @@ import processing.core.PVector;
 public abstract class Sprite {
     PApplet p;
     PVector position;
-    final static int SPEED = 1;
-    float vel;
-    float radius;
-    int color;
+    final static int SIZE_UPPER = 50;
+    final static int SIZE_LOWER = 5;
+    final float speed = 8;
+    public float circumference;
+    public float radius;
+    protected int color;
 
     public Sprite(PApplet p){
         position = new PVector();
         this.p = p;
         this.position.x = (float) Math.random() * p.width;
-        this.radius = (float) (Math.random() * 30) + 15; //Gives a range of 15-30 for the radius;
+        this.circumference = (float) p.random(SIZE_LOWER, SIZE_UPPER);
+        this.radius = circumference / 2;
     }
 
-    public void move(){
-        this.position.y += vel;
-    }
+    public abstract void move();
 
     public void draw(){
         p.fill(color);
-        p.circle(position.x, position.y, radius);
+        p.strokeWeight(4);
+        p.stroke(0);
+        p.circle(position.x, position.y, circumference);
     }
 
-    public float getVel(){
-        return this.vel;
+    public boolean isTouching(Sprite c1){
+        return this.position.dist(c1.position) < this.radius + c1.radius;
     }
 
 }
